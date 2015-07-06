@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="720" height="120" initialize="init(event)">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			public static const EVENT_LAST_SONG:String = "lastSong";
+			public static const EVENT_NEXT_SONG:String = "nextSong";
+			public static const EVENT_PLAY_SONG:String = "playSong";
+			
+			public function get sliderValue():Number {
+				return volSlider.value;
+			}
+			
+			private var _isStop:Boolean = false;
+			protected function onPlay(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				_isStop = false;
+				this.dispatchEvent(new Event(EVENT_PLAY_SONG));
+			}
+			
+			protected function onStop(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				_isStop = true;
+				this.dispatchEvent(new Event(Event.CLOSE));
+			}
+			
+			protected function onLast(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				this.dispatchEvent(new Event(EVENT_LAST_SONG));
+			}
+			
+			protected function onNext(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				this.dispatchEvent(new Event(EVENT_NEXT_SONG));
+			}
+			
+			protected function hslider1_changeHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				this.dispatchEvent(new Event(Event.CHANGE));
+			}
+			
+			protected function init(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				volSlider.value = 10;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:HSlider id="volSlider" x="516" y="67" width="150" height="15" change="hslider1_changeHandler(event)"/>
+	<s:Button x="70" y="36" width="70" height="70" label="Play" fontSize="20" click="onPlay(event)"/>
+	<s:Button x="148" y="36" width="70" height="70" label="Stop" fontSize="20" click="onStop(event)"/>
+	<s:Button x="284" y="36" width="70" height="70" label="last" fontSize="18" click="onLast(event)"/>
+	<s:Button x="370" y="36" width="70" height="70" label="next" fontSize="18" click="onNext(event)"/>
+</s:Group>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:seletor="com.seletor.*"
+		 xmlns:controller="com.controller.*"
+		 width="720" height="640" fontFamily="Arial" title="stroll's mp3 player" creationComplete="init()">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	
+	
+	<fx:Script>
+		<![CDATA[
+			protected function init():void
+			{
+				// TODO Auto-generated method stub
+				controller.addEventListener(Event.CHANGE , onChangeVolHandler);
+				controller.addEventListener(Event.CLOSE , onCloseSongHandler);
+				controller.addEventListener(PlayController.EVENT_PLAY_SONG , onPlaySong);
+				controller.addEventListener(PlayController.EVENT_LAST_SONG , onPlayLastSong);
+				controller.addEventListener(PlayController.EVENT_NEXT_SONG , onPlayNextSong);
+			}
+			
+			protected function onChangeVolHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				songSelector.vol = controller.sliderValue;
+			}
+			
+			protected function onCloseSongHandler(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				songSelector.stopSong();
+			}
+			
+			protected function onPlaySong(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				songSelector.playSong()
+			}
+			
+			protected function onPlayLastSong(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				songSelector.playLast();
+			}
+			
+			protected function onPlayNextSong(event:Event):void
+			{
+				// TODO Auto-generated method stub
+				songSelector.playNext();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<seletor:SongSelector x="0" y="0" id="songSelector">
+	</seletor:SongSelector>
+	<controller:PlayController x="-2" y="487" id="controller">
+	</controller:PlayController>
+</s:Panel>

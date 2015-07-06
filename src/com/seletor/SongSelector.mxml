@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Box xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:mx="library://ns.adobe.com/flex/mx"
+		width="720" height="480" textAlign="right" backgroundColor="0xaaaaaa" creationComplete="init()">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import spark.components.supportClasses.ItemRenderer;
+			import spark.events.IndexChangeEvent;
+			
+			[Bindable]
+			private var _track:ArrayCollection;
+			
+			protected function init():void
+			{
+				// TODO Auto-generated method stub
+				SongDataManager.instance.addEventListener(Event.COMPLETE , onCompleteLoadSongs);
+			}
+			
+			
+			protected function onChangeHandler(event:IndexChangeEvent):void
+			{
+				// TODO Auto-generated method stub
+				trace(mp3List.selectedItem);
+			}
+			
+			protected function onCompleteLoadSongs(event:Event):void
+			{
+				// TODO Auto-generated method stub'
+				SongDataManager.instance.removeEventListener(Event.COMPLETE , onCompleteLoadSongs);
+				_track = new ArrayCollection(SongDataManager.instance.track);
+				mp3List.dataProvider = _track;
+			}
+			
+			protected function initList(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				trace(_track);
+			}
+			
+			public function set vol(value:Number):void {
+				SongDataManager.instance.setVol(value);
+			}
+			
+			public function playLast():void {
+				SongDataManager.instance.playLast();
+			}
+			
+			public function playNext():void {
+				SongDataManager.instance.playNext();
+			}
+			
+			public function playSong():void {
+				SongDataManager.instance.play();
+			}
+			
+			public function stopSong():void {
+				SongDataManager.instance.pause();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:List id="mp3List" width="720" height="480" change="onChangeHandler(event)" itemRenderer="com.seletor.SongItemRender" dataProvider="{_track}" creationComplete="initList(event)">
+	</s:List>
+</mx:Box>
